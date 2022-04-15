@@ -1,0 +1,12 @@
+<map id="inheritanceec36324b92" name="inheritanceec36324b92">
+<area shape="rect" id="node1" href="#panel.pane.base.PaneBase" target="_top" title="PaneBase is the abstract baseclass for all atomic displayable units" alt="" coords="823,63,978,83"/>
+<area shape="rect" id="node5" href="#panel.pane.vega.Vega" target="_top" title="The Vega pane renders Vega&#45;lite based plots (including those from Altair)" alt="" coords="1016,63,1148,83"/>
+<area shape="rect" id="node2" href="panel.reactive.html#panel.reactive.Reactive" target="_top" title="Reactive is a Viewable object that also supports syncing between" alt="" coords="645,63,785,83"/>
+<area shape="rect" id="node3" href="#panel.pane.vega.Selection" target="_top" title="The Events object is dynamically updated to allow listening to" alt="" coords="259,4,413,24"/>
+<area shape="rect" id="node4" title="params(name=String)" alt="" coords="4,43,211,63"/>
+<area shape="rect" id="node8" href="panel.viewable.html#panel.viewable.Renderable" target="_top" title="Baseclass for objects which can be rendered to a Bokeh model." alt="" coords="257,43,414,63"/>
+<area shape="rect" id="node9" href="panel.viewable.html#panel.viewable.Layoutable" target="_top" title="Layoutable defines shared style and layout related parameters" alt="" coords="258,82,414,102"/>
+<area shape="rect" id="node6" href="panel.reactive.html#panel.reactive.Syncable" target="_top" title="Syncable is an extension of the Renderable object which can not" alt="" coords="463,43,605,63"/>
+<area shape="rect" id="node7" href="panel.viewable.html#panel.viewable.Viewable" target="_top" title="Viewable is the baseclass all visual components in the panel" alt="" coords="460,82,607,102"/>
+<area shape="rect" id="node10" href="panel.viewable.html#panel.viewable.ServableMixin" target="_top" title="Mixin to define methods shared by objects which can served." alt="" coords="249,121,422,141"/>
+</map>
