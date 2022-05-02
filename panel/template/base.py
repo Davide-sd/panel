@@ -23,7 +23,7 @@ from ..io.model import add_to_doc
 from ..io.notifications import NotificationArea
 from ..io.notebook import render_template
 from ..io.resources import (
-    CDN_DIST, LOCAL_DIST, BUNDLE_DIR, component_resource_path, resolve_custom_path
+    CDN_DIST, LOCAL_DIST, BUNDLE_DIR, _env, component_resource_path, resolve_custom_path
 )
 from ..io.save import save
 from ..io.state import state
@@ -63,7 +63,7 @@ class BaseTemplate(param.Parameterized, ServableMixin):
         super().__init__(**params)
         if isinstance(template, str):
             self._code = template
-            template = _Template(template)
+            template = _env.from_string(template)
         else:
             self._code = None
         self.template = template
@@ -524,7 +524,6 @@ class BasicTemplate(BaseTemplate):
             state.sync_busy(self.busy_indicator)
         self._update_vars()
         doc = super()._init_doc(doc, comm, title, notebook, location)
-        print('.>>>', doc, self.notifications)
         if self.notifications:
             state._notifications[doc] = self.notifications
         if self.theme:
