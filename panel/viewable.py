@@ -342,6 +342,9 @@ class ServableMixin(object):
                     template.header.append(self)
             else:
                 self.server_doc(title=title, location=location)
+        elif state._is_pyodide and hasattr(sys.stdout, '_out'):
+            from .io.pyodide import write
+            write(sys.stdout._out, self)
         return self
 
     def show(self, title=None, port=0, address=None, websocket_origin=None,
@@ -835,8 +838,8 @@ class Viewer(param.Parameterized):
 
         return view
 
-    def servable(self, title=None, location=True):
-        return self._create_view().servable(title, location)
+    def servable(self, title=None, location=True, area='main'):
+        return self._create_view().servable(title, location, area)
 
     servable.__doc__ = ServableMixin.servable.__doc__
 
