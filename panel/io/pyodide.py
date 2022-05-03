@@ -4,6 +4,7 @@ import pyodide
 import os
 
 from js import JSON
+from typing import Optional
 
 import param
 
@@ -13,8 +14,9 @@ from bokeh.io.doc import set_curdoc
 from bokeh.embed.util import standalone_docs_json_and_render_items
 from bokeh.protocol.messages.patch_doc import process_document_events
 
+from ..config import config
 from . import resources
-from .convert import MockSessionContext, Request
+from .convert import MockSessionContext
 from .state import state
 
 
@@ -61,6 +63,8 @@ def _doc_json(doc):
     )
     render_items = [item.to_json() for item in render_items]
     root_ids = [m.id for m in doc.roots]
+    for el in root_els:
+        el.innerHTML = ''
     root_els = document.getElementsByClassName('bk-root')
     root_data = sorted([(int(el.getAttribute('data-root-id')), el.id) for el in root_els])
     render_items[0].update({
@@ -124,7 +128,6 @@ async def show(obj, target):
     write(target, obj)
 
 async def write(target, obj):
-
     """
     Renders the object into a DOM node specified by the target.
 
@@ -140,7 +143,7 @@ async def write(target, obj):
     from ..pane import panel as as_panel
 
     obj = as_panel(obj)
-    pydoc, model_json = _model_json(model, target)
+    pydoc, model_json = _model_json(obj, target)
     views = await Bokeh.embed.embed_item(JSON.parse(model_json))
     jsdoc = views[0].model.document
     _link_docs(pydoc, jsdoc)
@@ -155,12 +158,14 @@ async def write_doc(doc: Optional['Document'] = None) -> None:
     ---------
     doc: Document
     """
-    from js import Bokeh
-    from panel.pane import panel as as_panel
+    from js import Bokeh, document
+
+    body = document.getElementsByTagName('body')[0]
+    body.classList.remove("bk", "pn-loading", config.loading_spinner)
 
     doc = doc or state.curdoc
-    docs_json, render_items = _doc_json(obj)
+    docs_json, render_items = _doc_json(doc)
     views = await Bokeh.embed.embed_items(JSON.parse(docs_json), JSON.parse(render_items))
     jsdoc = views[0][0].model.document
     doc._session_context = None
-    _link_docs(obj, jsdoc)
+    _link_docs(doc, jsdoc)
